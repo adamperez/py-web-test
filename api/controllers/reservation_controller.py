@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
 from api.models import Reservation
@@ -9,7 +9,7 @@ reservation_blueprint = Blueprint('reservation_blueprint', __name__, url_prefix=
 @reservation_blueprint.route('/<res_id>', methods=['GET'])
 def get_res_by_id(res_id):
     """
-    TODO
+    look up reservation by id
     :param res_id:
     :return:
     """
@@ -23,7 +23,7 @@ def get_res_by_id(res_id):
 @reservation_blueprint.route('/create', methods=['POST'])
 def create_new_reservation():
     """
-    TODO
+    create new reservation in db based on front end form
     :return:
     """
     if not request.json:
@@ -33,4 +33,6 @@ def create_new_reservation():
     session.add(res)
     resp = session.commit()
     if not resp:
+        # send message to flask for creation by name
+        flash('reservation for {} created'.format(request.json.get('name')))
         return jsonify({'message': 'reservation for {} created'.format(request.json.get('name'))})

@@ -6,6 +6,8 @@ from api.controllers.reservation_controller import reservation_blueprint
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'wiselytest2021'
+
 app.register_blueprint(index_blueprint)
 app.register_blueprint(inventory_blueprint)
 app.register_blueprint(reservation_blueprint)
