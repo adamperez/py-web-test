@@ -6,10 +6,7 @@ $(document).ready(function () {
 });
 
 function submitNewInventory(resCount, startDate, startTime, endDate, endTime) {
-    /*
-     * Submit new inventory to backend
-     * TODO: possibly clean this up?
-     */
+    // submit new inventory window to backend
     let maxCount = null
     if (resCount) {
         maxCount = resCount;

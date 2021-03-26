@@ -11,3 +11,12 @@ def index():
     :return:
     """
     return render_template('inventory.html')
+
+
+@index_blueprint.route('/reservation', methods=['GET'])
+def res_index():
+    """
+    serve main index page
+    :return:
+    """
+    return render_template('reservation.html')

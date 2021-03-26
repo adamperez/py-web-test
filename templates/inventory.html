@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/inventory.js') }}"><</script>
-<!--    <script type="text/javascript" src="frontend/js/inventory.js"></script>-->
 </head>
 <body>
-    <div id="main-section">
+    <div id="main-inventory-section">
+        <a href="reservation">Create new reservation</a>
         <h2>Inventory Panel</h2>
 
         <div id="new-inv-section">
             <h3>Submit new Inventory Window</h3>
-            <form id="new-inventory-submit">
+            <form id="new-inventory-form">
                 <!-- drop down for max num of res in window -->
                 <label for="max-res-count">Max number of reservations: </label>
                 <select name="max-res-count" id="max-res-count"></select>
