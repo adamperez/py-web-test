@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
 from api.models import Inventory
@@ -30,7 +30,8 @@ def get_all_invs():
     """
     inv = session.query(Inventory).all()
     if not inv:
-        return jsonify({'error': 'no inventory found'}), 400
+        flash('no inventory found')
+        return jsonify({'error': 'no inventory found'})
     return jsonify({'inventory': [i.serialize() for i in inv]})
 
 

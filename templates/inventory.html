@@ -4,12 +4,25 @@
     <title>Restaurant Inventory Management</title>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/common.js') }}"><</script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/inventory.js') }}"><</script>
 </head>
 <body>
     <div id="main-inventory-section">
-        <a href="reservation">Create new reservation</a>
+        <a href="/reservation">Create new reservation</a>
         <h2>Inventory Panel</h2>
+
+        <div id="flask-messages">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                    </ul>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
         <div id="new-inv-section">
             <h3>Submit new Inventory Window</h3>
@@ -18,16 +31,25 @@
                 <label for="max-res-count">Max number of reservations: </label>
                 <select name="max-res-count" id="max-res-count"></select>
                 <br>
-                <label for="start-inv-date">Start date:</label>
-                <input type="date" id="start-inv-date" name="start-inv-date" value="2021-01-01" min="0001-01-01" max="9999-12-31">
-                <label for="start-inv-time">Start time:</label>
-                <input type="time" id="start-inv-time" name="start-inv-time" min="00:00" step="900" required>
+                <div id="form-date">
+                    <label for="form-date-mm">Month: </label>
+                    <select id="form-date-mm" name="form-date-mm"></select>
+
+                    <label for="form-date-dd">Day: </label>
+                    <select id="form-date-dd" name="form-date-dd"></select>
+
+                    <label for="form-date-yyyy">Year: </label>
+                    <select id="form-date-yyyy" name="form-date-yyyy"></select>
+                </div>
                 <br>
-                <label for="end-inv-date">End date:</label>
-                <input type="date" id="end-inv-date" name="end-inv-date" value="2021-01-01" min="0001-01-01" max="9999-12-31">
-                <label for="end-inv-time">End time:</label>
-                <input type="time" id="end-inv-time" name="end-inv-time" min="00:00" step="900" required>
-                <br>
+                <label for="form-date">Reservation Time: </label>
+                <div id="form-time">
+                    <label for="form-time-hh">Hour: </label>
+                    <select id="form-time-hh" name="form-time-hh"></select>
+
+                    <label for="form-time-mm">Minute: </label>
+                    <select id="form-time-mm" name="form-time-mm"></select>
+                </div>
                 <input onclick="submitNewInventory();" id="btn-submit-new-inv" value="Submit" type="button"/>
             </form>
         </div>

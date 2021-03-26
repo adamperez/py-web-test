@@ -23,7 +23,7 @@ def get_res_by_id(res_id):
 @reservation_blueprint.route('/create', methods=['POST'])
 def create_new_reservation():
     """
-    create new reservation in db based on front end form
+    create new reservation in db based on front end form, if inventory allows it
     :return:
     """
     if not request.json:

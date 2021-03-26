@@ -68,6 +68,13 @@ function refreshInventoryDisplay() {
         type: 'GET',
         url: '/inventory/all',
     }).then(function (data) {
+        // if no data present, short-circuit and flash message
+        if (data.error) {
+            location.href = '/';
+            return;
+        }
+
+        // process inventory model into html table
         let trHTML = '';
         $.each(data.inventory, function(i, item) {
             trHTML = '<tr><td>' + item.id + '</td><td>' + item.max_reservations + '</td><td>' + item.curr_num_reservations + '</td><td>' + item.inv_time_ceiling + '</td><td>' + item.inv_time_floor + '</td></tr>';
