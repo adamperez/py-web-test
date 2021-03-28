@@ -5,60 +5,32 @@ $(document).ready(function () {
     }
 });
 
-function submitNewInventory(resCount, startDate, startTime, endDate, endTime) {
+function submitNewInventory() {
     // submit new inventory window to backend
-    let maxCount = null
-    if (resCount) {
-        maxCount = resCount;
-    } else {
-        e = document.getElementById("max-res-count");
-        maxCount = e.options[e.selectedIndex].value;
-    }
+    invDate = $("#new-inv-form-date .form-date-yyyy")[0].value + '-' +
+        $("#new-inv-form-date .form-date-mm")[0].value + '-' +
+        $("#new-inv-form-date .form-date-dd")[0].value;
+    windows = aggregateInvWindows();
 
-    let maxStartDate = null
-    if (startDate) {
-        maxStartDate = startDate;
-    } else {
-        let d = $('#start-inv-date').val();
-        maxStartDate = d;
-    }
-    let maxStartTime = null
-    if (startTime) {
-        maxStartTime = startTime;
-    } else {
-        let d = $('#start-inv-time').val();
-        maxStartTime = d;
-    }
+//    console.log({
+//        'inv_date': invDate,
+//        'windows': windows
+//    })
 
-    let maxEndDate = null
-    if (endDate) {
-        maxEndDate = endDate;
-    } else {
-        let d = $('#end-inv-date').val();
-        maxEndDate = d;
-    }
-    let maxEndTime = null
-    if (endTime) {
-        maxEndTime = endTime;
-    } else {
-        let d = $('#end-inv-time').val();
-        maxEndTime = d;
-    }
-
-    // call to backend
-    return $.ajax({
-        type: 'POST',
-        url: '/inventory/create',
-        dataType: 'json',
-        data: JSON.stringify({
-                'max_reservations': maxCount,
-                'inv_time_ceiling': maxStartDate + ' ' + maxStartTime,
-                'inv_time_floor': maxEndDate + ' ' + maxEndTime
-            }),
-        contentType: 'application/json;charset=UTF-8'
-    }).then(function (result) {
-        console.log(result)
-    })
+//    // call to backend
+//    return $.ajax({
+//        type: 'POST',
+//        url: '/inventory/create',
+//        dataType: 'json',
+//        data: JSON.stringify({
+//                'max_reservations': maxCount,
+//                'inv_time_ceiling': maxStartDate + ' ' + maxStartTime,
+//                'inv_time_floor': maxEndDate + ' ' + maxEndTime
+//            }),
+//        contentType: 'application/json;charset=UTF-8'
+//    }).then(function (result) {
+//        console.log(result)
+//    })
 }
 
 function dupeWindowForm() {
@@ -69,15 +41,14 @@ function dupeWindowForm() {
 
 function aggregateInvWindows() {
     // aggregate all inventory windows into compact JSON for backend processing
-    var windows = {'inv_windows': []};
+    var windows = [];
     $(".new-inv-win").each(function (index, element) {
-        windows['inv_windows'].push({
+        windows.push({
             'start_time': element.getElementsByClassName("form-time-hh")[0].value + ':' + element.getElementsByClassName("form-time-mm")[0].value,
             'end_time': element.getElementsByClassName("form-end-time-hh")[0].value + ':' + element.getElementsByClassName("form-end-time-mm")[0].value,
             'max_res_count': element.getElementsByClassName("form-int-counter")[0].value
         })
     });
-    console.log(windows);
     return windows;
 }
 
