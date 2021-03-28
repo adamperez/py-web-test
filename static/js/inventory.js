@@ -61,6 +61,25 @@ function submitNewInventory(resCount, startDate, startTime, endDate, endTime) {
     })
 }
 
+function dupeWindowForm() {
+    // append new inv window to form
+    let clone = document.querySelector('.new-inv-win').cloneNode( true );
+    document.querySelector('#new-inv-windows').appendChild( clone );
+}
+
+function aggregateInvWindows() {
+    //
+    var windows = {'inv_windows': []};
+    $(".new-inv-win").each(function (index, element) {
+        var currWin = {}
+        currWin['start_time'] = element.getElementsByClassName("form-time-hh")[0].value + ':' + element.getElementsByClassName("form-time-mm")[0].value;
+        currWin['end_time'] = element.getElementsByClassName("form-end-time-hh")[0].value + ':' + element.getElementsByClassName("form-end-time-mm")[0].value;
+        currWin['max_res_count'] = element.getElementsByClassName("form-int-counter")[0].value;
+        windows['inv_windows'].push(currWin)
+    });
+    console.log(windows);
+}
+
 function refreshInventoryDisplay() {
     // todo
 
