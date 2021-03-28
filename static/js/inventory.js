@@ -68,16 +68,17 @@ function dupeWindowForm() {
 }
 
 function aggregateInvWindows() {
-    //
+    // aggregate all inventory windows into compact JSON for backend processing
     var windows = {'inv_windows': []};
     $(".new-inv-win").each(function (index, element) {
-        var currWin = {}
-        currWin['start_time'] = element.getElementsByClassName("form-time-hh")[0].value + ':' + element.getElementsByClassName("form-time-mm")[0].value;
-        currWin['end_time'] = element.getElementsByClassName("form-end-time-hh")[0].value + ':' + element.getElementsByClassName("form-end-time-mm")[0].value;
-        currWin['max_res_count'] = element.getElementsByClassName("form-int-counter")[0].value;
-        windows['inv_windows'].push(currWin)
+        windows['inv_windows'].push({
+            'start_time': element.getElementsByClassName("form-time-hh")[0].value + ':' + element.getElementsByClassName("form-time-mm")[0].value,
+            'end_time': element.getElementsByClassName("form-end-time-hh")[0].value + ':' + element.getElementsByClassName("form-end-time-mm")[0].value,
+            'max_res_count': element.getElementsByClassName("form-int-counter")[0].value
+        })
     });
     console.log(windows);
+    return windows;
 }
 
 function refreshInventoryDisplay() {
