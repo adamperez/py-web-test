@@ -7,25 +7,22 @@ $(document).ready(function () {
 
 function submitNewInventory() {
     // submit new inventory window to backend
-    invDate = $("#new-inv-form-date .form-date-yyyy")[0].value + '-' +
+    var invDate = $("#new-inv-form-date .form-date-yyyy")[0].value + '-' +
         $("#new-inv-form-date .form-date-mm")[0].value + '-' +
         $("#new-inv-form-date .form-date-dd")[0].value;
-    windows = aggregateInvWindows();
+    var windows = aggregateInvWindows();
 
-//    console.log({
-//        'inv_date': invDate,
-//        'windows': windows
-//    })
+    var payload = {
+        'date': invDate,
+        'windows': windows
+    };
 
     // call to backend
     return $.ajax({
         type: 'POST',
         url: '/inventory/create',
         dataType: 'json',
-        data: JSON.stringify({
-            'date': invDate,
-            'windows': windows
-        }),
+        data: JSON.stringify(payload),
         contentType: 'application/json;charset=UTF-8'
     }).then(function (result) {
         location.href = '/';
@@ -35,8 +32,8 @@ function submitNewInventory() {
 
 function dupeWindowForm() {
     // append new inv window to form
-    let clone = document.querySelector('.new-inv-win').cloneNode( true );
-    document.querySelector('#new-inv-windows').appendChild( clone );
+    var clone = document.querySelector('.new-inv-win').cloneNode(true);
+    document.querySelector('#new-inv-windows').appendChild(clone);
 }
 
 function aggregateInvWindows() {
@@ -53,7 +50,7 @@ function aggregateInvWindows() {
 }
 
 function refreshInventoryDisplay() {
-    // todo
+    // refresh inventory display
 
     return $.ajax({
         type: 'GET',

@@ -36,12 +36,4 @@ $(document).ready(function () {
             $select.append($('<option></option>').val(minuteArr[j]).html(minuteArr[j]))
         }
     }
-
-
-
-//    var $select = $("#form-time-mm");
-//    var minuteArr = ['00', '15', '30', '45']
-//    for (i=0;i<minuteArr.length;i++){
-//        $select.append($('<option></option>').val(minuteArr[i]).html(minuteArr[i]))
-//    }
 });
