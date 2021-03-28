@@ -17,20 +17,20 @@ function submitNewInventory() {
 //        'windows': windows
 //    })
 
-//    // call to backend
-//    return $.ajax({
-//        type: 'POST',
-//        url: '/inventory/create',
-//        dataType: 'json',
-//        data: JSON.stringify({
-//                'max_reservations': maxCount,
-//                'inv_time_ceiling': maxStartDate + ' ' + maxStartTime,
-//                'inv_time_floor': maxEndDate + ' ' + maxEndTime
-//            }),
-//        contentType: 'application/json;charset=UTF-8'
-//    }).then(function (result) {
-//        console.log(result)
-//    })
+    // call to backend
+    return $.ajax({
+        type: 'POST',
+        url: '/inventory/create',
+        dataType: 'json',
+        data: JSON.stringify({
+            'date': invDate,
+            'windows': windows
+        }),
+        contentType: 'application/json;charset=UTF-8'
+    }).then(function (result) {
+        location.href = '/';
+        return;
+    })
 }
 
 function dupeWindowForm() {

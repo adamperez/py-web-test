@@ -1,5 +1,6 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
 
 from api.managers.db_manager import engine
 
@@ -31,20 +32,35 @@ class Inventory(Base):
     __tablename__ = 'inventory'
 
     id = Column(Integer, primary_key=True, autoincrement=True)  # for longevity, use UUID (SQLite doesn't like them)
-    max_reservations = Column(Integer)  # number of max reservations in a window
-    curr_num_reservations = Column(Integer)     # current number of reservations
-    inv_time_ceiling = Column(String)   # upper bound of inventory time
-    inv_time_floor = Column(String)     # lower bound of inventory time
+    date = Column(Integer)
 
-    # TODO: do i need a relationship for this & res?
+    windows = relationship("InventoryWindow")
+
+    # TODO: add relationship serializataion
 
     def serialize(self):
         return {
             'id': self.id,
-            'max_reservations': self.max_reservations,
-            'curr_num_reservations': self.curr_num_reservations,
-            'inv_time_ceiling': self.inv_time_ceiling,
-            'inv_time_floor': self.inv_time_floor
+            'date': self.date,
+            'windows': [win.serialize() for win in self.windows]
+        }
+
+
+class InventoryWindow(Base):
+    __tablename__ = 'inventory_windows'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    inventory_id = Column(Integer, ForeignKey('inventory.id'))
+    max_res_count = Column(Integer)
+    start_time = Column(String)
+    end_time = Column(String)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'max_res_count': self.max_res_count,
+            'start_time': self.start_time,
+            'end_time': self.end_time
         }
 
 

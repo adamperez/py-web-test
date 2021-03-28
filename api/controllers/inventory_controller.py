@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
-from api.models import Inventory
+from api.models import Inventory, InventoryWindow
 
 inventory_blueprint = Blueprint('inventory_blueprint', __name__,
                                 url_prefix='/inventory',
@@ -39,13 +39,28 @@ def get_all_invs():
 def create_new_inventory():
     """
     create new inventory item
+    # todo: error handling
     :return:
     """
     if not request.json:
         return jsonify({'error': 'no body supplied'}), 400
 
+    windows = request.json.pop('windows', None)
+    if not windows:
+        return jsonify({'error': 'no inventory windows supplied'}), 400
+
+    # create new inventory, then create new windows
+
     inv = Inventory(**request.json)
     session.add(inv)
     resp = session.commit()
+
+    for win in windows:
+        window = InventoryWindow(**win)
+        window.inventory_id = inv.id
+        session.add(window)
+        resp = session.commit()
+
     if not resp:
+        flash('inventory created')
         return jsonify({'message': 'inventory created'})
