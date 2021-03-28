@@ -58,6 +58,7 @@ def create_new_inventory():
     for win in windows:
         window = InventoryWindow(**win)
         window.inventory_id = inv.id
+        window.current_res_count = 0
         session.add(window)
         resp = session.commit()
 

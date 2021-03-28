@@ -36,8 +36,6 @@ class Inventory(Base):
 
     windows = relationship("InventoryWindow")
 
-    # TODO: add relationship serializataion
-
     def serialize(self):
         return {
             'id': self.id,
@@ -52,6 +50,7 @@ class InventoryWindow(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     inventory_id = Column(Integer, ForeignKey('inventory.id'))
     max_res_count = Column(Integer)
+    current_res_count = Column(Integer)
     start_time = Column(String)
     end_time = Column(String)
 
@@ -59,9 +58,11 @@ class InventoryWindow(Base):
         return {
             'id': self.id,
             'max_res_count': self.max_res_count,
+            'current_res_count': self.current_res_count,
             'start_time': self.start_time,
             'end_time': self.end_time
         }
 
 
+# run this to create empty sqlite db
 Base.metadata.create_all(engine)
