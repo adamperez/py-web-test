@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
 from api.models import Inventory, InventoryWindow
+from api.util.date_util import generate_inv_window_times
 
 inventory_blueprint = Blueprint('inventory_blueprint', __name__,
                                 url_prefix='/inventory',
@@ -56,11 +57,17 @@ def create_new_inventory():
     resp = session.commit()
 
     for win in windows:
-        window = InventoryWindow(**win)
-        window.inventory_id = inv.id
-        window.current_res_count = 0
-        session.add(window)
-        resp = session.commit()
+        # generate all 15 minute blocks per each start/end inventory time
+        all_window_times = generate_inv_window_times(win.get('start_time'), win.get('end_time'))
+
+        for time_pair in all_window_times:
+            window = InventoryWindow(**win)
+            window.inventory_id = inv.id
+            window.current_res_count = 0
+            window.start_time = time_pair[0]
+            window.end_time = time_pair[1]
+            session.add(window)
+            resp = session.commit()
 
     if not resp:
         flash('inventory created')

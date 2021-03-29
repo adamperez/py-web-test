@@ -1,8 +1,8 @@
-from datetime import datetime
 from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
-from api.models import Reservation, Inventory, InventoryWindow
+from api.models import Reservation, Inventory
+from api.util.date_util import time_str_to_obj
 
 reservation_blueprint = Blueprint('reservation_blueprint', __name__, url_prefix='/reservation')
 
@@ -40,19 +40,19 @@ def create_new_reservation():
     res_time = request.json.get('time', None)
     if not res_time:
         return jsonify({'error': 'no reservation time supplied'}), 400
-    res_time = datetime.strptime(res_time, '%H:%M')
+    res_time = time_str_to_obj(res_time)
 
     open_inventory = session.query(Inventory).filter_by(date=res_date).all()
     if not open_inventory:
         return jsonify({'error': 'no open inventory for date {}'.format(res_date)})
 
-    # TODO: add more granular error returns
+    error = 'reservation invalid'
     for inv in open_inventory:
         for window in inv.windows:
             if window.current_res_count < window.max_res_count:
                 # check if res date falls in current window
-                window_start = datetime.strptime(window.start_time, '%H:%M')
-                window_end = datetime.strptime(window.end_time, '%H:%M')
+                window_start = time_str_to_obj(window.start_time)
+                window_end = time_str_to_obj(window.end_time)
 
                 # if requested res time is valid, update res count and save res
                 if window_start <= res_time <= window_end:
@@ -66,5 +66,9 @@ def create_new_reservation():
                         # send message to flask for creation by name
                         flash('reservation for {} created'.format(request.json.get('name')))
                         return jsonify({'message': 'reservation for {} created'.format(request.json.get('name'))})
+                else:
+                    error = 'requested reservation time is not available in current inventory'
+            else:
+                error = 'current inventory window cannot accept additional reservations, please select different time'
 
-    return jsonify({'error': 'reservation invalid'}), 400
+    return jsonify({'error': error}), 400
