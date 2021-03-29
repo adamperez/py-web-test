@@ -6,9 +6,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/common.js') }}"><</script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/inventory.js') }}"><</script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div id="main-inventory-section">
+    <div id="main-inventory-section" class="main-section">
         <h2>Inventory Panel</h2>
 
         <div id="flask-messages">
@@ -38,8 +39,6 @@
                     <select id="form-date-yyyy" class="form-date-yyyy"></select>
                 </div>
                 <br>
-
-                <h3>Inventory Windows</h3>
                 <div id="new-inv-windows">
                     <input onclick="dupeWindowForm();" value="Add window" type="button"/>
                     <br>
@@ -56,10 +55,10 @@
         <br>
         <br>
         <div id="curr-inv-section">
-            <h3>Current Inventory</h3>
-            <input onclick="refreshInventoryDisplay();" id="btn-refresh-invs" value="Refesh Inventory" type="button">
+            <b style="padding: 5px">Current Inventory</b>
+            <input onclick="refreshInventoryDisplay();" id="btn-refresh-invs" value="Refresh Inventory" type="button" style="padding: 5px">
 
-<!--            this is hidden on page load if empty -->
+            <!-- this is hidden on page load if empty -->
             <div id="curr-inv-display">
                 <table id="curr-inv-tbl">
                     <tr>
