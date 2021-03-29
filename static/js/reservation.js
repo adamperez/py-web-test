@@ -82,5 +82,6 @@ function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay,
     }).then(function (result) {
         console.log(result);
         location.href = '/reservation';
+        return;
     })
 }

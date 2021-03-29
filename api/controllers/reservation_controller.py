@@ -64,11 +64,11 @@ def create_new_reservation():
                     resp = session.commit()
                     if not resp:
                         # send message to flask for creation by name
-                        flash('reservation for {} created'.format(request.json.get('name')))
+                        flash('reservation for {} created'.format(request.json.get('name')), 'success')
                         return jsonify({'message': 'reservation for {} created'.format(request.json.get('name'))})
                 else:
                     error = 'requested reservation time is not available in current inventory'
             else:
                 error = 'current inventory window cannot accept additional reservations, please select different time'
-
+    flash(error, 'error')
     return jsonify({'error': error}), 400

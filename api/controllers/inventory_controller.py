@@ -31,8 +31,8 @@ def get_all_invs():
     """
     inv = session.query(Inventory).all()
     if not inv:
-        flash('no inventory found')
-        return jsonify({'error': 'no inventory found'})
+        flash('no inventory found', 'error')
+        return jsonify({'error': 'no inventory found'}), 400
     return jsonify({'inventory': [i.serialize() for i in inv]})
 
 
@@ -70,5 +70,5 @@ def create_new_inventory():
             resp = session.commit()
 
     if not resp:
-        flash('inventory created')
+        flash('inventory created', 'success')
         return jsonify({'message': 'inventory created'})

@@ -9,22 +9,22 @@
 </head>
 <body>
     <div id="main-res-section">
-        <a href="/">View inventory panel</a>
         <h2>Reservation Panel</h2>
 
         <div id="flask-messages">
-            {% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                    <ul class="flashes">
-                        {% for message in messages %}
-                        <li>{{ message }}</li>
-                    </ul>
+                    <div class="flashes">
+                        {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
         </div>
 
         <div id="new-res-section">
+            <a href="/">View inventory panel</a>
             <h3>Create new reservation</h3>
             <form id="new-res-form">
                 <label for="res-name">Name:</label>

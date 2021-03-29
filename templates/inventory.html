@@ -9,22 +9,22 @@
 </head>
 <body>
     <div id="main-inventory-section">
-        <a href="/reservation">Create new reservation</a>
         <h2>Inventory Panel</h2>
 
         <div id="flask-messages">
-            {% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                    <ul class="flashes">
-                        {% for message in messages %}
-                        <li>{{ message }}</li>
-                    </ul>
+                    <div class="flashes">
+                        {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
         </div>
 
         <div id="new-inv-section">
+            <a href="/reservation">Create new reservation</a>
             <h3>Submit new Inventory Window</h3>
             <form id="new-inventory-form">
                 <div id="new-inv-form-date">
@@ -48,7 +48,6 @@
                         and <select id="form-end-time-hh" class="form-end-time-hh"></select>:<select id="form-end-time-mm" class="form-end-time-mm"></select>
                         I want <select name="form-int-counter" class="form-int-counter"></select> parties every 15 minutes.
                     </div>
-<!--                    <br>-->
                 </div>
 
                 <input onclick="submitNewInventory();" id="btn-submit-new-inv" value="Submit" type="button"/>
@@ -60,7 +59,7 @@
             <h3>Current Inventory</h3>
             <input onclick="refreshInventoryDisplay();" id="btn-refresh-invs" value="Refesh Inventory" type="button">
 
-            <!-- todo hide this when empty -->
+<!--            this is hidden on page load if empty -->
             <div id="curr-inv-display">
                 <table id="curr-inv-tbl">
                     <tr>

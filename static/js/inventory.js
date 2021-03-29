@@ -1,8 +1,12 @@
 $(document).ready(function () {
-    var $select = $("#max-res-count");
-    for (i=1;i<=100;i++){
-        $select.append($('<option></option>').val(i).html(i))
-    }
+    // hide inventory if empty
+    $.ajax({
+        type: 'GET',
+        url: '/inventory/all',
+        error: function() {
+            $('#curr-inv-tbl').hide();
+        }
+    })
 });
 
 function submitNewInventory() {
@@ -60,6 +64,9 @@ function refreshInventoryDisplay() {
             location.href = '/';
             return;
         }
+        // show inv table
+        $('#curr-inv-tbl').show();
+
         // capture inventory object from resp for table display
         var inventory = data.inventory[0];
 
