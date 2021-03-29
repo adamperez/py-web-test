@@ -105,6 +105,7 @@ ENV/
 
 # local dbs
 *.sqlite
+*.db
 
 # Mac specific files
 *.DS_Store
