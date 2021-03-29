@@ -3,6 +3,9 @@ $(document).ready(function () {
     $.ajax({
         type: 'GET',
         url: '/inventory/all',
+        success: function() {
+            refreshInventoryDisplay();
+        },
         error: function() {
             $('#curr-inv-tbl').hide();
         }
@@ -64,8 +67,9 @@ function refreshInventoryDisplay() {
             location.href = '/';
             return;
         }
-        // show inv table
+        // show inv table clear it for fresh data
         $('#curr-inv-tbl').show();
+        $('#curr-inv-tbl').find("tr:gt(0)").remove();
 
         // capture inventory object from resp for table display
         var inventory = data.inventory[0];
