@@ -34,17 +34,23 @@ def create_new_reservation():
     # look up by date to see if any availability
     res_date = request.json.get('date', None)
     if not res_date:
-        return jsonify({'error': 'no reservation date supplied'}), 400
+        error = 'no reservation date supplied'
+        flash(error, 'error')
+        return jsonify({'error': error}), 400
 
     # check if res time present, if found, convert to DT object
     res_time = request.json.get('time', None)
     if not res_time:
-        return jsonify({'error': 'no reservation time supplied'}), 400
+        error = 'no reservation time supplied'
+        flash(error, 'error')
+        return jsonify({'error': error}), 400
     res_time = time_str_to_obj(res_time)
 
     open_inventory = session.query(Inventory).filter_by(date=res_date).all()
     if not open_inventory:
-        return jsonify({'error': 'no open inventory for date {}'.format(res_date)})
+        error = 'no open inventory for date {}'.format(res_date)
+        flash(error, 'error')
+        return jsonify({'error': error})
 
     error = 'reservation invalid'
     for inv in open_inventory:
