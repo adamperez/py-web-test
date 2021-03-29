@@ -56,16 +56,17 @@ function refreshInventoryDisplay() {
         type: 'GET',
         url: '/inventory/all',
     }).then(function (data) {
-        // if no data present, short-circuit and flash message
         if (data.error) {
             location.href = '/';
             return;
         }
+        // capture inventory object from resp for table display
+        var inventory = data.inventory[0];
 
-        // process inventory model into html table
+        // process inventory / window models into HTML table
         let trHTML = '';
-        $.each(data.inventory, function(i, item) {
-            trHTML = '<tr><td>' + item.id + '</td><td>' + item.max_reservations + '</td><td>' + item.curr_num_reservations + '</td><td>' + item.inv_time_ceiling + '</td><td>' + item.inv_time_floor + '</td></tr>';
+        $.each(data.inventory[0].windows, function(i, window) {
+            trHTML += '<tr><td>' + inventory.id + '</td><td>' + inventory.date + '</td><td>' + window.start_time + '</td><td>' + window.end_time + '</td><td>' + window.current_res_count + '</td><td>' + window.max_res_count + '</td></tr>';
         });
         $('#curr-inv-tbl').append(trHTML);
     })
