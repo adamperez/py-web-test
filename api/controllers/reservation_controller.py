@@ -55,7 +55,7 @@ def create_new_reservation():
                 window_end = time_str_to_obj(window.end_time)
 
                 # if requested res time is valid, update res count and save res
-                if window_start <= res_time <= window_end:
+                if window_start <= res_time < window_end:
                     window.current_res_count = window.current_res_count + 1
                     session.add(window)
 

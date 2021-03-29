@@ -36,6 +36,5 @@ def generate_inv_window_times(start_time, end_time):
     # for i, time in enumerate(times):
     for i in range(len(times) - 1):
         t = (times[i], times[i+1])
-        print(t)
         windows.append(t)
     return windows
