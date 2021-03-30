@@ -13,6 +13,10 @@ function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay,
     } else {
         rName = document.getElementById("res-name").value;
     }
+    if (rName == null || rName == '') {
+        alert('Reservation name must be populated');
+        return;
+    }
     let rEmail = null
     if (resEmail) {
         rName = resEmail;

@@ -71,14 +71,36 @@ function refreshInventoryDisplay() {
         $('#curr-inv-tbl').show();
         $('#curr-inv-tbl').find("tr:gt(0)").remove();
 
+        var flatInv = flattenInventory(data);
+
         // capture inventory object from resp for table display
         var inventory = data.inventory[0];
 
         // process inventory / window models into HTML table
         let trHTML = '';
-        $.each(data.inventory[0].windows, function(i, window) {
-            trHTML += '<tr><td>' + inventory.id + '</td><td>' + inventory.date + '</td><td>' + window.start_time + '</td><td>' + window.end_time + '</td><td>' + window.current_res_count + '</td><td>' + window.max_res_count + '</td></tr>';
+        $.each(flatInv, function(i, res) {
+            trHTML += '<tr><td>' + res.id + '</td><td>' + res.date + '</td><td>' + res.start_time + '</td><td>' + res.end_time + '</td><td>' + res.current_res_count + '</td><td>' + res.max_res_count + '</td></tr>';
         });
         $('#curr-inv-tbl').append(trHTML);
     })
+}
+
+function flattenInventory(data) {
+    // flatten json structure for inventory from backend to easily parse/display on front end
+    var allInv = [];
+    for (i = 0; i < data.inventory.length; i++) {
+        var currInv = data.inventory[i];
+        for (j = 0; j < currInv.windows.length; j++) {
+            var flatInv = {};
+            flatInv['id'] = currInv.id;
+            flatInv['date'] = currInv.date;
+            flatInv['start_time'] = currInv.windows[j].start_time;
+            flatInv['start_time'] = currInv.windows[j].start_time;
+            flatInv['end_time'] = currInv.windows[j].end_time;
+            flatInv['current_res_count'] = currInv.windows[j].current_res_count;
+            flatInv['max_res_count'] = currInv.windows[j].max_res_count;
+            allInv.push(flatInv);
+        }
+    }
+    return allInv;
 }
