@@ -6,7 +6,7 @@ $(document).ready(function () {
 });
 
 function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay, resYear, resHour, resMinute) {
-    // TODO
+    // parse reservation form from front end, submit to backend if validated
     let rName = null
     if (resName) {
         rName = resName;
@@ -92,7 +92,6 @@ function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay,
         data: JSON.stringify(payload),
         contentType: 'application/json;charset=UTF-8'
     }).then(function (result) {
-        console.log(result);
         location.href = '/reservation';
         return;
     })

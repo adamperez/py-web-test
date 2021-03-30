@@ -5,3 +5,16 @@
     padding: 10px;
     text-align: center;
 }
+
+.flask-messages {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.flask-messages .success {
+    color: green;
+}
+
+.flask-messages .error {
+    color: red;
+}
