@@ -23,12 +23,20 @@ function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay,
     } else {
         rEmail  = document.getElementById("res-email").value;
     }
+    if (rEmail == null || rEmail == '') {
+        alert('Reservation email must be populated');
+        return;
+    }
 
     let rSize = null
     if (resPartySize) {
         rSize = resPartySize;
     } else {
         rSize = $("#new-res-form .form-int-counter")[0].value;
+    }
+    if (rSize == 0) {
+        alert('Reservation party must be greater than 0');
+        return;
     }
 
     let rMon = null
