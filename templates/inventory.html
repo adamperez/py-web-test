@@ -39,15 +39,16 @@
                 </div>
                 <br>
                 <div id="new-inv-windows">
-                    <input onclick="dupeWindowForm();" value="Add window" type="button"/>
-                    <br>
                     <div class="new-inv-win">
                         Between <select id="form-time-hh" class="form-time-hh"></select>:<select id="form-time-mm" class="form-time-mm"></select>
                         and <select id="form-end-time-hh" class="form-end-time-hh"></select>:<select id="form-end-time-mm" class="form-end-time-mm"></select>
                         I want <select name="form-int-counter" class="form-int-counter"></select> parties every 15 minutes.
                     </div>
                 </div>
-
+                <br>
+                <input onclick="dupeWindowForm();" value="Add 15 minute window" type="button"/>
+                <br>
+                <br>
                 <input onclick="submitNewInventory();" id="btn-submit-new-inv" value="Submit" type="button"/>
             </form>
         </div>

@@ -91,8 +91,11 @@ function submitNewReservation(resName, resEmail, resPartySize, resMonth, resDay,
         dataType: 'json',
         data: JSON.stringify(payload),
         contentType: 'application/json;charset=UTF-8'
-    }).then(function (result) {
+    }).then(function () {
         location.href = '/reservation';
         return;
-    })
+    }, function(){
+        location.href = '/reservation';
+        return;
+    });
 }

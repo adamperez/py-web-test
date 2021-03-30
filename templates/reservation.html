@@ -37,26 +37,29 @@
                 <select class="form-int-counter" id="form-int-counter"></select>
                 <br>
                 <br>
-                <label for="form-date">Reservation date: </label>
-                <div id="form-date">
-                    <label for="form-date-mm">Month: </label>
-                    <select id="form-date-mm" name="form-date-mm"></select>
+                <div class="form-dt">
+                    <label for="form-date">Reservation date: </label>
+                    <div id="form-date" class="form-date">
+                        <label for="form-date-mm">Month: </label>
+                        <select id="form-date-mm" name="form-date-mm"></select>
 
-                    <label for="form-date-dd">Day: </label>
-                    <select id="form-date-dd" name="form-date-dd"></select>
+                        <label for="form-date-dd">Day: </label>
+                        <select id="form-date-dd" name="form-date-dd"></select>
 
-                    <label for="form-date-yyyy">Year: </label>
-                    <select id="form-date-yyyy" name="form-date-yyyy"></select>
+                        <label for="form-date-yyyy">Year: </label>
+                        <select id="form-date-yyyy" name="form-date-yyyy"></select>
+                    </div>
+                    <br>
+                    <label for="form-time">Reservation Time: </label>
+                    <div id="form-time" class="form-time">
+                        <label for="form-time-hh">Hour: </label>
+                        <select id="form-time-hh" name="form-time-hh"></select>
+
+                        <label for="form-time-mm">Minute: </label>
+                        <select id="form-time-mm" name="form-time-mm"></select>
+                    </div>
                 </div>
                 <br>
-                <label for="form-date">Reservation Time: </label>
-                <div id="form-time">
-                    <label for="form-time-hh">Hour: </label>
-                    <select id="form-time-hh" name="form-time-hh"></select>
-
-                    <label for="form-time-mm">Minute: </label>
-                    <select id="form-time-mm" name="form-time-mm"></select>
-                </div>
                 <input onclick="submitNewReservation();" id="btn-submit-new-inv" value="Submit" type="button"/>
             </form>
         </div>

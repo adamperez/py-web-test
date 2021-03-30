@@ -1,9 +1,16 @@
+body {
+    background-color: #E5E6E9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .main-section {
     margin: auto;
     width: 50%;
-    border: 3px solid green;
+    /*border: 3px solid green;*/
+    border: 3px solid #AF2207;
     padding: 10px;
     text-align: center;
+    background-color: white;
 }
 
 .flask-messages {
@@ -17,4 +24,14 @@
 
 .flask-messages .error {
     color: red;
+}
+
+.form-dt {
+
+}
+.form-date {
+
+}
+.form-time {
+
 }
