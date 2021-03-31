@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, flash
 
 from api.managers.db_manager import session
 from api.models import Inventory, InventoryWindow
-from api.util.date_util import generate_inv_window_times
+from api.util.date_util import generate_inv_window_times, time_str_to_obj
 
 inventory_blueprint = Blueprint('inventory_blueprint', __name__,
                                 url_prefix='/inventory',
@@ -57,6 +57,12 @@ def create_new_inventory():
     resp = session.commit()
 
     for win in windows:
+        # exit case when start time > end time
+        if time_str_to_obj(win.get('end_time')) <= time_str_to_obj(win.get('start_time')):
+            error = 'inventory window end time should be greater than start time'
+            flash(error, 'error')
+            return jsonify({'error': error})
+
         # generate all 15 minute blocks per each start/end inventory time
         all_window_times = generate_inv_window_times(win.get('start_time'), win.get('end_time'))
 
