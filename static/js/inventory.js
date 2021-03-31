@@ -79,7 +79,7 @@ function refreshInventoryDisplay() {
         // process inventory / window models into HTML table
         let trHTML = '';
         $.each(flatInv, function(i, res) {
-            trHTML += '<tr><td>' + res.id + '</td><td>' + res.date + '</td><td>' + res.start_time + '</td><td>' + res.end_time + '</td><td>' + res.current_res_count + '</td><td>' + res.max_res_count + '</td></tr>';
+            trHTML += '<tr><td>' + res.id + '</td><td>' + res.date + '</td><td>' + res.start_time + '</td><td>' + res.end_time + '</td><td>' + res.current_res_count + '</td><td>' + res.max_res_count + '</td><td>' + res.window_status + '</td></tr>';
         });
         $('#curr-inv-tbl').append(trHTML);
     })
@@ -99,6 +99,7 @@ function flattenInventory(data) {
             flatInv['end_time'] = currInv.windows[j].end_time;
             flatInv['current_res_count'] = currInv.windows[j].current_res_count;
             flatInv['max_res_count'] = currInv.windows[j].max_res_count;
+            flatInv['window_status'] = flatInv['current_res_count'] == flatInv['max_res_count'] ? 'Filled' : 'Available'
             allInv.push(flatInv);
         }
     }
