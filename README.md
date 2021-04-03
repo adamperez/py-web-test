@@ -1,4 +1,5 @@
-# Wisely Web Test (Python-Flask)
+# Reservation Inventory Webapp
+(Formerly Wisely web-test)
 
 ## How to Run
 - Prereq: Download Python 3
